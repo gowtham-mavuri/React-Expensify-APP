@@ -2,12 +2,15 @@
   "name": "Basic_React_Settings",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "15.x"
+  },
   "author": "Gowtham516",
   "license": "MIT",
   "scripts": {
     "serve": "live-server public/",
     "start": "node server/server.js",
-    "heroku-postbuild" : "yarn run build-prod",
+    "heroku-postbuild": "yarn run build-prod",
     "dev-server": "webpack-dev-server",
     "build": "webpack",
     "build-prod": "webpack -p --env production",
@@ -25,6 +28,7 @@
     "express": "4.15.4",
     "live-server": "^1.2.1",
     "moment": "2.18.1",
+    "node": "15.4.0",
     "node-sass": "5.0.0",
     "normalize.css": "7.0.0",
     "react": "16.0.0",
