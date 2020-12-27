@@ -1,22 +1,35 @@
 import uuid from 'uuid';
+import database from '../firebase/firebase';
 
 //ADD_EXPENSE
-export const addExpense = ( { description='',note='',amount=0,createdAt=0 }={} ) => {
+const addExpense = ( expense={} ) => {
     return (
         {
             type : 'ADD_EXPENSE',
-            expense : { id: uuid(),
-                        description ,
-                        note ,
-                        amount ,
-                        createdAt  
-                       }
+            expense 
         }
     );
 }
 
+export const startAddExpense = ({ description='',note='',amount=0,createdAt=0 }={}) => {
+    return (dispatch)=>{
+        const expense = { description , amount , note , createdAt };
+        database.ref('expenses').push(expense).then((ref)=>{
+            dispatch(addExpense({
+                id : ref.key,
+                ...expense
+            }));
+        }).catch((e)=>{
+            console.log('Error while writing to firebase',e);
+        });
+
+    };
+};
+
+
+
 //EDIT_EXPENSE
-export const editExpense = (id,updates) => {
+const editExpense = (id,updates) => {
     return (
         {
             type : 'EDIT_EXPENSE',
@@ -26,12 +39,60 @@ export const editExpense = (id,updates) => {
     );
 }
 
+export const startEditExpense = (id,updates) => {
+    return (dispatch)=>{
+        const expense = { description:updates.description,
+                             amount : updates.amount,
+                             note: updates.note ,
+                              createdAt :updates.createdAt
+                        };
+        database.ref('expenses/'+id).update(expense).then((ref)=> {
+            dispatch(editExpense(id,updates));
+        }).catch((e)=>{
+            console.log('Error Occured')
+        });
+    };
+}
+
 //REMOVE_EXPENSE
-export const removeExpense = ({ id }) => {
+const removeExpense = ({ id }) => {
     return (
         {
             type : 'REMOVE_EXPENSE',
             id 
         }
     );
+}
+
+export const startRemoveExpense = ({id}) => {
+    return (dispatch)=>{
+        database.ref('expenses/'+id).remove().then((ref)=> {
+            dispatch(removeExpense({id}));
+        }).catch((e)=>{
+            console.log('Error Occured')
+        });
+    };
+}
+
+
+const setExpenses = (expenses) => {
+    return {  
+        type : 'SET_EXPENSES',
+        expenses
+    }
+}
+
+export const startSetExpenses = () => {
+    return (dispatch)=>{
+        return database.ref('expenses').once('value').then((snapshot)=>{
+            const expenses=[];
+            snapshot.forEach(childSnapshot => {
+                expenses.push({
+                    id:childSnapshot.key,
+                    ...childSnapshot.val()
+                });
+            });
+            dispatch(setExpenses(expenses));
+        });
+    };
 }
