@@ -1,0 +1,33 @@
+.input {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    @media (min-width: 45rem){
+        flex-direction: row;
+        margin-bottom: 1rem;
+    }
+}
+
+.input__item{
+  
+    @media (min-width: 45rem){
+        margin: 0 1.6rem 0 0;
+    }
+}
+
+.text-input {
+    border :1px solid #cacccd;
+    height :50px;
+    font-size: medium;
+    font-weight: 300;
+    padding: 1.6rem;
+}
+
+.select {
+    @extend .text-input
+}
+
+.textarea {
+    @extend .text-input;
+    height :10rem;
+}

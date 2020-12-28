@@ -8,6 +8,7 @@ import './styles/styles.scss';
 import AppRouter,{history} from './routers/AppRouter';
 import {firebase} from './firebase/firebase';
 import {startSetExpenses} from './actions/expenses';
+import Loading from './components/Loading';
 
 const store = configureStore();
 /*  
@@ -39,7 +40,7 @@ const renderApp=()=>{
 }
 
 
-ReactDOM.render(<h1>....loading....</h1>,document.getElementById('app'));
+ReactDOM.render(<Loading/>,document.getElementById('app'));
 
 
 
