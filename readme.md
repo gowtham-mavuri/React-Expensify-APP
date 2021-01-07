@@ -1,10 +1,8 @@
-# Git Commmands
-
-git init -- Create a new git repo
-git status -- View the changes to your project code
-git add --Add files to staging area
-git commit --Creates a new commit with files from staging area
-git log --view recent commits
+Expensify WebApplication Using React
+•	Provides user registration, Users can maintain their Expenses list by adding and deleting expenses
+•	Expenses can be filtered by Text and Date range
+•	Expenses can be sorted by price or Date
+•	Technologies used: React Router,Redux,Firebase
 
 
-git commit -m "message"
+Link:https://react-expensify-app-516.herokuapp.com/
